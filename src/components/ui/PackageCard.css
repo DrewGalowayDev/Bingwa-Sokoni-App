@@ -1,0 +1,247 @@
+/* Package Card - Glassmorphism 3D Design */
+.package-card {
+  position: relative;
+  background: var(--card-gradient);
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  /* 3D Effect */
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.2),
+    0 4px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* Smooth border */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  
+  /* Transform perspective for 3D feel */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.package-card:hover {
+  transform: translateY(-8px) scale(1.02) rotateX(2deg);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.package-card:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.package-card:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 3px;
+}
+
+/* Glassmorphism inner layer */
+.package-card__glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+/* 3D Shine/Light effect */
+.package-card__shine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 70%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.package-card:hover .package-card__shine {
+  left: 100%;
+}
+
+/* Badges */
+.package-card__badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.package-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.package-card__badge--popular {
+  background: rgba(255, 215, 0, 0.3);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.package-card__badge--multi {
+  background: rgba(255, 107, 53, 0.3);
+  border-color: rgba(255, 107, 53, 0.4);
+}
+
+.package-card__badge--offline {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Content */
+.package-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+/* Validity/Duration - Top text */
+.package-card__validity {
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+}
+
+/* Price - Center, largest */
+.package-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.package-card__currency {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.package-card__price-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Amount/Speed - Bottom text */
+.package-card__amount {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Queued State */
+.package-card--queued {
+  opacity: 0.7;
+  filter: grayscale(30%);
+}
+
+.package-card__queued-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 3;
+  border-radius: 20px;
+}
+
+/* Skeleton Loading */
+.package-card--skeleton {
+  background: linear-gradient(135deg, #2a2a3e 0%, #1e1e2e 100%);
+  pointer-events: none;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Grid Layout */
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .package-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .package-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) {
+  .package-card:active {
+    transform: scale(0.98);
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.2),
+      0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}

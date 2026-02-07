@@ -1,0 +1,30 @@
+{
+  "appEnabled": true,
+  "message": "App Console Pending. Please consult the developer for help.",
+  "title": "BEESAM Data",
+  "maintenanceMode": false,
+  "maintenanceMessage": "We're performing scheduled maintenance. Please try again in a few minutes.",
+  "minVersion": "1.0.0",
+  "latestVersion": "1.0.0",
+  "forceUpdate": false,
+  "updateUrl": "https://play.google.com/store/apps/details?id=com.beesamtech.data",
+  "announcements": [
+    {
+      "id": "welcome",
+      "title": "Welcome to BEESAM Data!",
+      "message": "Enjoy affordable data bundles.",
+      "type": "info",
+      "active": true
+    }
+  ],
+  "features": {
+    "stkPush": false,
+    "simToolkit": true,
+    "wallet": true,
+    "orders": true,
+    "notifications": true
+  },
+  "contactSupport": "0725911246",
+  "paybillNumber": "3720688",
+  "lastUpdated": "2026-02-07T00:00:00.000Z"
+}

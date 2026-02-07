@@ -1,0 +1,113 @@
+/* Network Status Badge */
+.network-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+/* Variants */
+.network-badge--default {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.network-badge--minimal {
+  background: transparent;
+  padding: var(--spacing-xs);
+}
+
+.network-badge--pill {
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Sizes */
+.network-badge--small {
+  padding: 2px var(--spacing-xs);
+  font-size: var(--font-size-xs);
+}
+
+.network-badge--small .network-badge__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.network-badge--medium .network-badge__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.network-badge--large {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+.network-badge--large .network-badge__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Online State */
+.network-badge.online {
+  color: var(--color-success);
+}
+
+.network-badge.online .network-badge__indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Offline State */
+.network-badge.offline {
+  color: var(--color-error);
+}
+
+.network-badge.offline .network-badge__indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-error);
+}
+
+.network-badge__label {
+  white-space: nowrap;
+}
+
+/* Offline Banner */
+.offline-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #92400E;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown var(--transition-normal) ease-out;
+}
+
+[data-theme="dark"] .offline-banner {
+  background: linear-gradient(135deg, #78350F 0%, #92400E 100%);
+  color: #FEF3C7;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+}

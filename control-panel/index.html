@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEESAM App Control Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f7931e 0%, #f15a24 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-enabled {
+            background: #00c853;
+            box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
+        }
+
+        .status-disabled {
+            background: #ff5252;
+            box-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-group:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label {
+            font-weight: 500;
+        }
+
+        .toggle-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 52px;
+            height: 28px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #00c853;
+        }
+
+        .toggle input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #00c853;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00c853 0%, #00a86b 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 200, 83, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 200, 83, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 82, 82, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(255, 82, 82, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: rgba(0, 200, 83, 0.2);
+            border: 1px solid rgba(0, 200, 83, 0.4);
+            color: #00e676;
+        }
+
+        .alert-danger {
+            background: rgba(255, 82, 82, 0.2);
+            border: 1px solid rgba(255, 82, 82, 0.4);
+            color: #ff5252;
+        }
+
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.4);
+            color: #ffc107;
+        }
+
+        .json-preview {
+            background: #0d1117;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .json-preview pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .json-container {
+            position: relative;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        .instructions {
+            background: rgba(33, 150, 243, 0.1);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #2196f3;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .instructions code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🐝</div>
+            <h1>BEESAM App Control Panel</h1>
+            <p class="subtitle">Remote control and configuration management</p>
+        </header>
+
+        <div id="alertContainer"></div>
+
+        <div class="instructions">
+            <h3>📋 How to Use This Control Panel</h3>
+            <ol>
+                <li>Modify the settings below as needed</li>
+                <li>Click "Generate Config" to create the JSON</li>
+                <li>Copy the generated JSON</li>
+                <li>Update the <code>app-config.json</code> file in your GitHub repo</li>
+                <li>Commit and push the changes</li>
+                <li>The app will automatically fetch the new config within 5 minutes</li>
+            </ol>
+        </div>
+
+        <!-- App Status Control -->
+        <div class="card">
+            <h2 class="card-title">
+                <span class="status-indicator" id="statusIndicator"></span>
+                App Status Control
+            </h2>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">App Enabled</div>
+                    <div class="toggle-desc">Master switch - disable to block all users</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="appEnabled" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">Maintenance Mode</div>
+                    <div class="toggle-desc">Show maintenance message but app remains enabled</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="maintenanceMode">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">Force Update</div>
+                    <div class="toggle-desc">Require users to update to minimum version</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="forceUpdate">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="card">
+            <h2 class="card-title">📝 Messages</h2>
+
+            <div class="form-group">
+                <label class="form-label">Disabled Message</label>
+                <textarea class="form-textarea" id="disabledMessage" placeholder="Message shown when app is disabled">App Console Pending. Please consult the developer for help.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Maintenance Message</label>
+                <textarea class="form-textarea" id="maintenanceMessage" placeholder="Message shown during maintenance">We're performing scheduled maintenance. Please try again in a few minutes.</textarea>
+            </div>
+        </div>
+
+        <!-- Feature Toggles -->
+        <div class="card">
+            <h2 class="card-title">⚙️ Feature Controls</h2>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">STK Push</div>
+                    <div class="toggle-desc">Enable M-PESA STK Push payments</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="featureStkPush">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">SIM Toolkit (Manual)</div>
+                    <div class="toggle-desc">Enable manual USSD payments</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="featureSimToolkit" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">Wallet</div>
+                    <div class="toggle-desc">Enable wallet features</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="featureWallet" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <div>
+                    <div class="toggle-label">Orders</div>
+                    <div class="toggle-desc">Enable order history</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="featureOrders" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Version Control -->
+        <div class="card">
+            <h2 class="card-title">📱 Version Control</h2>
+
+            <div class="form-group">
+                <label class="form-label">Minimum Required Version</label>
+                <input type="text" class="form-input" id="minVersion" value="1.0.0" placeholder="1.0.0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Latest Version</label>
+                <input type="text" class="form-input" id="latestVersion" value="1.0.0" placeholder="1.0.0">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Update URL (Play Store)</label>
+                <input type="text" class="form-input" id="updateUrl" value="" placeholder="https://play.google.com/store/apps/details?id=...">
+            </div>
+        </div>
+
+        <!-- Contact & Config -->
+        <div class="card">
+            <h2 class="card-title">📞 Support Info</h2>
+
+            <div class="form-group">
+                <label class="form-label">Support Phone Number</label>
+                <input type="text" class="form-input" id="contactSupport" value="0725911246" placeholder="0725911246">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Paybill Number</label>
+                <input type="text" class="form-input" id="paybillNumber" value="3720688" placeholder="3720688">
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+            <h2 class="card-title">⚡ Quick Actions</h2>
+            <div class="btn-group">
+                <button class="btn btn-danger" onclick="emergencyDisable()">
+                    🚨 Emergency Disable
+                </button>
+                <button class="btn btn-primary" onclick="enableApp()">
+                    ✅ Enable App
+                </button>
+                <button class="btn btn-secondary" onclick="setMaintenance()">
+                    🔧 Set Maintenance
+                </button>
+            </div>
+        </div>
+
+        <!-- Generated Config -->
+        <div class="card">
+            <h2 class="card-title">📄 Generated Configuration</h2>
+            <div class="btn-group" style="margin-bottom: 16px;">
+                <button class="btn btn-primary" onclick="generateConfig()">
+                    Generate Config
+                </button>
+                <button class="btn btn-secondary" onclick="copyConfig()">
+                    📋 Copy to Clipboard
+                </button>
+                <button class="btn btn-secondary" onclick="downloadConfig()">
+                    💾 Download JSON
+                </button>
+            </div>
+            <div class="json-container">
+                <div class="json-preview">
+                    <pre id="configOutput">Click "Generate Config" to create the configuration JSON</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>BEESAM Tech Control Panel v1.0</p>
+            <p>Changes take effect within 5 minutes of updating the GitHub config</p>
+        </footer>
+    </div>
+
+    <script>
+        // Update status indicator
+        function updateStatusIndicator() {
+            const indicator = document.getElementById('statusIndicator');
+            const appEnabled = document.getElementById('appEnabled').checked;
+            const maintenanceMode = document.getElementById('maintenanceMode').checked;
+            
+            if (!appEnabled) {
+                indicator.className = 'status-indicator status-disabled';
+            } else if (maintenanceMode) {
+                indicator.className = 'status-indicator';
+                indicator.style.background = '#ffc107';
+                indicator.style.boxShadow = '0 0 10px rgba(255, 193, 7, 0.5)';
+            } else {
+                indicator.className = 'status-indicator status-enabled';
+            }
+        }
+
+        // Add event listeners to toggles
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateStatusIndicator);
+        });
+
+        // Initial status update
+        updateStatusIndicator();
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        function generateConfig() {
+            const config = {
+                appEnabled: document.getElementById('appEnabled').checked,
+                message: document.getElementById('disabledMessage').value,
+                title: "BEESAM Data",
+                maintenanceMode: document.getElementById('maintenanceMode').checked,
+                maintenanceMessage: document.getElementById('maintenanceMessage').value,
+                minVersion: document.getElementById('minVersion').value,
+                latestVersion: document.getElementById('latestVersion').value,
+                forceUpdate: document.getElementById('forceUpdate').checked,
+                updateUrl: document.getElementById('updateUrl').value,
+                announcements: [],
+                features: {
+                    stkPush: document.getElementById('featureStkPush').checked,
+                    simToolkit: document.getElementById('featureSimToolkit').checked,
+                    wallet: document.getElementById('featureWallet').checked,
+                    orders: document.getElementById('featureOrders').checked,
+                    notifications: true
+                },
+                contactSupport: document.getElementById('contactSupport').value,
+                paybillNumber: document.getElementById('paybillNumber').value,
+                lastUpdated: new Date().toISOString()
+            };
+
+            const output = document.getElementById('configOutput');
+            output.textContent = JSON.stringify(config, null, 2);
+            showAlert('✅ Configuration generated successfully!', 'success');
+        }
+
+        function copyConfig() {
+            const output = document.getElementById('configOutput').textContent;
+            if (output.includes('Click "Generate Config"')) {
+                showAlert('⚠️ Please generate the config first', 'warning');
+                return;
+            }
+            
+            navigator.clipboard.writeText(output).then(() => {
+                showAlert('✅ Configuration copied to clipboard!', 'success');
+            }).catch(() => {
+                showAlert('❌ Failed to copy. Please select and copy manually.', 'danger');
+            });
+        }
+
+        function downloadConfig() {
+            const output = document.getElementById('configOutput').textContent;
+            if (output.includes('Click "Generate Config"')) {
+                showAlert('⚠️ Please generate the config first', 'warning');
+                return;
+            }
+
+            const blob = new Blob([output], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'app-config.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showAlert('✅ Configuration downloaded!', 'success');
+        }
+
+        function emergencyDisable() {
+            if (confirm('⚠️ This will disable the app for ALL users. Are you sure?')) {
+                document.getElementById('appEnabled').checked = false;
+                document.getElementById('disabledMessage').value = 'App Console Pending. Please consult the developer for help.';
+                updateStatusIndicator();
+                generateConfig();
+                showAlert('🚨 Emergency disable config generated. Update your GitHub repo to apply.', 'danger');
+            }
+        }
+
+        function enableApp() {
+            document.getElementById('appEnabled').checked = true;
+            document.getElementById('maintenanceMode').checked = false;
+            updateStatusIndicator();
+            generateConfig();
+            showAlert('✅ App enabled config generated. Update your GitHub repo to apply.', 'success');
+        }
+
+        function setMaintenance() {
+            document.getElementById('appEnabled').checked = true;
+            document.getElementById('maintenanceMode').checked = true;
+            updateStatusIndicator();
+            generateConfig();
+            showAlert('🔧 Maintenance mode config generated. Update your GitHub repo to apply.', 'warning');
+        }
+    </script>
+</body>
+</html>

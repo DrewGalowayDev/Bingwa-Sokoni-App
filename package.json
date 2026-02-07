@@ -1,0 +1,57 @@
+{
+  "name": "bingwa-sokoni",
+  "version": "1.0.0",
+  "description": "Automated Safaricom Package Selling System - Offline-First React Application",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^5.7.8",
+    "@capacitor/app": "^5.0.8",
+    "@capacitor/browser": "^5.2.1",
+    "@capacitor/core": "^5.7.8",
+    "@capacitor/haptics": "^5.0.8",
+    "@capacitor/keyboard": "^5.0.9",
+    "@capacitor/local-notifications": "^5.0.8",
+    "@capacitor/network": "^5.0.8",
+    "@capacitor/preferences": "^5.0.8",
+    "@capacitor/share": "^5.0.8",
+    "@capacitor/splash-screen": "^5.0.8",
+    "@capacitor/status-bar": "^5.0.8",
+    "@capacitor/toast": "^5.0.8",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.5",
+    "idb": "^7.1.1",
+    "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.20.0",
+    "react-scripts": "^5.0.1",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^5.7.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "cap:init": "npx cap init",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "build:android": "npm run build && npx cap sync android"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

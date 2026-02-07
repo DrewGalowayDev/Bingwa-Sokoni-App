@@ -1,0 +1,25 @@
+{
+  "appId": "com.bingwasokoni.app",
+  "appName": "BEESAM Data App",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0a1628",
+      "showSpinner": true,
+      "spinnerColor": "#00C853"
+    },
+    "StatusBar": {
+      "style": "dark",
+      "backgroundColor": "#0a1628"
+    }
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}
